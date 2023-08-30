@@ -1,0 +1,1 @@
+function waitforkeypress(key)%% waits for the press of a certain key% % key:		key as a string, e.g. 'space'%			strings can be found out with KbCheck%% 2006 by Martin Rolfs (for Mac OSX) keyCode = 1000;while strcmp(KbNameMR(keyCode),key)==0	FlushEvents('keyDown');	KbWait;	[kid, t, keyCode] = KbCheck;end
