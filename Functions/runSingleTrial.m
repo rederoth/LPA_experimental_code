@@ -5,17 +5,7 @@ function td = runSingleTrial(el, td)
 % available or not)
 % every flip send a message to the eyeLink
 
-% by Richard Schweitzer
-
-
-% Nico TODOs
-%   - are all messages sent / is everything synced with the eyelink?
-%   - is there a problem due to assuming all videos have 120 frames?
-%   - check that loading of video is fast enough on lab setup!
-%   - error using screen in second block?!? --> video giraffe
-%   - problem due to scaling?
-
-
+% by Richard Schweitzer, adapted by Nicolas Roth
 
 
 
