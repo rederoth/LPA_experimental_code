@@ -29,7 +29,7 @@ setting.Pixx    = 2;        % ViewPixx screen [1], ProPixx+Datapixx [2], any pc 
 setting.First   = 1;        % start from the first block or from block number [1-8]
 setting.session = 1; %%
 % video options
-setting.path_to_videos = '/home/darklab-user/Documents/Projects/nico/LPA_study/Stimuli/';
+setting.path_to_videos = 'Stimuli/';  % add full path here!
 setting.video_perc_of_screen = 0.8; % define the size of the video relative to the screen
 % eyelink options
 setting.calib_perc_of_screen = 0.7; % define the eccentricity of the calibration dots
