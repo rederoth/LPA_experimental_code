@@ -5,6 +5,8 @@
 % Based on UVO code by Olga Shurygina & Richard Schweitzer
 % 2022 by Jasper McLaughlin & Nicolas Roth 
 %
+% Present either 10sec static scene (image blocks) or an image
+% for 5sec that then unfreezes to a 5sec video (video blocks).
 % Attention test - 2AFC questions after randomly assigned trials
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

@@ -5,12 +5,6 @@ import csv
 import gzip
 import numpy as np
 
-# Note to future Nico about parsing (from initial exploratory analysis):
-# there was an error in LPA06_1, with tTRIAL_Start 156, since there were 2 lines of events between BLOCK 8 and TRIAL_Start 156
-# (and the code above cannot handle that). Because I'm lazy and reckless, I just made a change in the ASC file directly,
-# shifting BLOCK 8 two lines down. Defs not good practice but easiest for now...
-# I guess if I'd increase the tolerance in the code up there (naively!), it would increase runtime substantially!
-
 
 def transform_x(input, video_min=192, video_max=1728, target_min=0, target_max=1920):
     try:
