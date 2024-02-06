@@ -1,0 +1,9 @@
+tqdm
+pandas
+numpy
+matplotlib
+seaborn
+scipy
+statsmodels
+scikit-image
+pymatreader
