@@ -13,9 +13,10 @@ trialCntr = 0;
 setting.do_escape = 0; % is set to 1 if the escape key was pressed in runSingleTrial
 
 % run through blocks
-for b = setting.First:length(design.b)
+for b = 1:length(design.b)
  %%       
     % maybe a first calibration to start the block?
+    b_display = b - 1 + setting.First;
     if setting.TEST == 0
         KbReleaseWait;
         data.b(b).block_calib_result = doCalibration(el);
@@ -25,9 +26,9 @@ for b = setting.First:length(design.b)
     %implement info whether current trial is images or videos here
     if design.b(b).trial(1).video == 0 && setting.do_escape == 0
         if setting.Lang == 1 % --> english, 2 is german...
-            blockInfoText = sprintf('Block %d:\nIn this block, we only show images\nPlease indicate whether block %d is:\n\n[IMAGES / VIDEOS]', b,b);
+            blockInfoText = sprintf('Block %d:\nIn this block, we only show images\nPlease indicate whether block %d is:\n\n[IMAGES / VIDEOS]', b_display, b_display);
         else
-            blockInfoText = sprintf('Block %d:\nIn diesem Block  zeigen wir nur Bilder\nBitte bestätige, woraus Block %d besteht:\n\n[BILDER / VIDEOS]', b,b);
+            blockInfoText = sprintf('Block %d:\nIn diesem Block  zeigen wir nur Bilder\nBitte bestätige, woraus Block %d besteht:\n\n[BILDER / VIDEOS]', b_display,b_display);
         end
         DisplayFormattedTextOnScreen(blockInfoText, scr, scr.centerX, scr.centerY, 4); %%
         resp = 0;
@@ -37,9 +38,9 @@ for b = setting.First:length(design.b)
 %         DisplayFormattedTextOnScreen(sprintf('Loading image...'),scr, scr.centerX, scr.centerY, 3);
     elseif design.b(b).trial(1).video == 1 && setting.do_escape == 0
         if setting.Lang == 1 % --> 1 is english, 2 is german...
-            blockInfoText = sprintf('Block %d:\nIn this block, we only show videos\nPlease indicate whether block %d is:\n\n[IMAGES / VIDEOS]', b,b);
+            blockInfoText = sprintf('Block %d:\nIn this block, we only show videos\nPlease indicate whether block %d is:\n\n[IMAGES / VIDEOS]', b_display,b_display);
         else
-            blockInfoText = sprintf('Block %d:\nIn diesem Block zeigen wir nur Videos\nBitte bestätige, woraus Block %d besteht:\n\n[BILDER / VIDEOS]', b, b);
+            blockInfoText = sprintf('Block %d:\nIn diesem Block zeigen wir nur Videos\nBitte bestätige, woraus Block %d besteht:\n\n[BILDER / VIDEOS]', b_display,b_display);
         end
         DisplayFormattedTextOnScreen(blockInfoText, scr, scr.centerX, scr.centerY, 4); %%
         resp = 0;
@@ -81,7 +82,7 @@ for b = setting.First:length(design.b)
 %             if design.b(b).trial(1).video == 0 && setting.do_escape == 0
 %                 td = runSingleTrialImage(el, t_now);
 %             else design.b(b).trial(1).video == 1 && setting.do_escape == 0
-                td = runSingleTrial(el,t_now);
+                td = runSingleTrialPTB(el,t_now); 
 %             end
             
             % first, check whether the escape key was pressed:
@@ -167,7 +168,7 @@ for b = setting.First:length(design.b)
         else
             blockInfoText = sprintf('Block %d ist geschafft.\nBereit zum Weitermachen?\n\n[LEERZEICHEN]',b);
         end
-        DisplayFormattedTextOnScreen(sprintf(blockInfoText, scr, scr.centerX, scr.centerY, 3);
+        DisplayFormattedTextOnScreen(blockInfoText, scr, scr.centerX, scr.centerY, 3);
         keyPress = 0;
         while ~keyPress
             [keyPress, tRes] = checkTarPress(keys.nextTrial);
