@@ -132,8 +132,10 @@ d_animate = {
 }
 
 
-DATA_PATH = "/home/nico/project_data/LPA/data/raw_data/"
-STORE_PATH = "/home/nico/project_data/LPA/data/LPA_5s_parsed_data/"
+DATA_PATH = "Data/raw_data/"
+STORE_PATH = "Data/LPA_5s_parsed_data/"
+os.makedirs(STORE_PATH, exist_ok=True)
+
 asc_files = sorted([f for f in os.listdir(DATA_PATH) if ".asc" in f])
 mat_files = sorted(
     [f for f in os.listdir(DATA_PATH) if (".mat" in f) and ("trialinfo" not in f)]
