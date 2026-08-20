@@ -7,7 +7,7 @@ import time
 from skimage.transform import resize
 from pymatreader import read_mat
 
-# from remodnav.clf import EyegazeClassifier
+from remodnav.clf import EyegazeClassifier
 
 
 def transform_x(
@@ -16,10 +16,10 @@ def transform_x(
     try:
         num = float(input)
     except ValueError:
-        return np.NaN
+        return np.nan
     # check if x val exceeds boundaries of the video
     if (video_max <= num) or (num < video_min) or np.isnan(num):
-        return np.NaN
+        return np.nan
     else:
         return int(
             (num - video_min + target_min)
@@ -34,10 +34,10 @@ def transform_y(
     try:
         num = float(input)
     except ValueError:
-        return np.NaN
+        return np.nan
     # check if val exceeds boundaries of the video
     if (video_max <= num) or (num < video_min) or np.isnan(num):
-        return np.NaN
+        return np.nan
     else:
         return int(
             (num - video_min + target_min)
@@ -82,10 +82,10 @@ def get_potential_for_action(df_pfa, scene):
     df_temp = df_pfa[df_pfa["scene"] == scene]
     for i in range(len(df_temp)):
         r = [
-            int(df_temp.iloc[i][1]),
-            int(df_temp.iloc[i][2]),
-            int(df_temp.iloc[i][3]),
-            int(df_temp.iloc[i][4]),
+            int(df_temp.iloc[i, 1]),
+            int(df_temp.iloc[i, 2]),
+            int(df_temp.iloc[i, 3]),
+            int(df_temp.iloc[i, 4]),
         ]
         pfa_mask[r[1] : r[1] + r[3], r[0] : r[0] + r[2]] += 1
     pfa_mask /= np.std(pfa_mask)
@@ -95,7 +95,7 @@ def get_potential_for_action(df_pfa, scene):
 
 def eval_arr(arr, x, y):
     if np.isnan([y, x]).any():
-        return np.NaN
+        return np.nan
     else:
         return arr[int(y), int(x)]
 
@@ -173,13 +173,12 @@ EM_LABELS = {
 
 
 def main():
-    PARSED_PATH = "LPA_5s_parsed_data/"
-    SAL_PATH = "Saliency/"
-    OBJ_PATH = "Segmentation/"
+    PARSED_PATH = "Data/LPA_5s_parsed_data/"
+    SAL_PATH = "Stimuli/derived_for_analysis/Saliency/"
+    OBJ_PATH = "Stimuli/derived_for_analysis/Segmentation/"
     RATING_PATH = "ExpertRatings/"
-    STORE_PATH = "LPA_5s_eval_psycsci/"
-    # if not os.path.exists(STORE_PATH):
-    #     os.makedirs(STORE_PATH)
+    STORE_PATH = "Data/LPA_5s_eval_all/"
+    os.makedirs(STORE_PATH, exist_ok=True)
 
     parser = argparse.ArgumentParser()
     parser.add_argument("--subject_id", type=str)
