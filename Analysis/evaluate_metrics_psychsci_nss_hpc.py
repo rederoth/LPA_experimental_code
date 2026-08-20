@@ -38,7 +38,7 @@ def shift_elements_to(arr, x, y):
 
 def calc_nss(KERNEL, df_rest, scene, vid, t, x, y, em):
     if np.isnan([y, x]).any() or (em != "FOV") or (t > 5000):
-        return np.NaN
+        return np.nan
     else:
         df = df_rest.loc[(scene, vid, t)]
         X_rest = np.array(df["x"], dtype=int)
@@ -53,18 +53,22 @@ def calc_nss(KERNEL, df_rest, scene, vid, t, x, y, em):
 def main():
     t_start = time.time()
 
-    EVAL_PATH = "/home/users/n/nicolas-roth/LPA/LPA_5s_eval_psycsci/"
+    EVAL_PATH = "Data/LPA_5s_eval_all/"
     px2deg = (47.7 * 0.8) / (1920)  # 0.8 is the scaling factor, vals are transformed!
     # 0.8 should actually be in the numerator!! (corrected now)
     # --> effectively this means NSS was calculated on a 1.28 instead of 2dva.
     # kernel = gauss2d((1080, 1920), 2 * 0.8**2 / px2deg) # this effectively ran previously
-    kernel = gauss2d((1080, 1920), 2 / px2deg)  # this is correct now!
+    dva = {"nss1dva": 1.0, "nss1.5dva": 1.5, "nss2dva": 2.0}[args.nss_size]
+    kernel = gauss2d((1080, 1920), dva / px2deg)  # this is correct now!
 
-    eval_files = sorted(os.listdir(EVAL_PATH))  #
+    eval_files = sorted(f for f in os.listdir(EVAL_PATH)
+                    if f.endswith("_eval_rad05_no_nss_hpc.csv.gz"))
     subj_ids = [f[7:9] for f in eval_files]
 
     parser = argparse.ArgumentParser()
     parser.add_argument("--subject_id", type=str)
+    parser.add_argument("--nss_size", type=str, default="nss2dva",
+                    choices=["nss1dva", "nss1.5dva", "nss2dva"])
     args = parser.parse_args()
     subject_id = args.subject_id
     print("Subject ", subject_id)
@@ -114,7 +118,7 @@ def main():
     df_sub["em_rv"].fillna("-", inplace=True)  # for storing in csv
 
     df_sub.to_csv(
-        f"{EVAL_PATH}LPA_5s_{subject_id}_eval_all.csv.gz",
+        f"{EVAL_PATH}LPA_5s_{subject_id}_eval_all_{args.nss_size}.csv.gz",
         compression="gzip",
         index=False,
     )
