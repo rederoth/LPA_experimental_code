@@ -71,14 +71,15 @@ def get_fov_cats(group):
 
 
 def main():
-    EVAL_PATH = "LPA_5s_eval_psycsci/"
-    SAL_PATH = "/home/nico/project_code/LPA_study/Saliency/"
-    OBJ_PATH = "/home/nico/project_code/LPA_study/Segmentation/"
-    RATING_PATH = "/home/nico/project_code/LPA_study/ExpertRatings/"
+    EVAL_PATH = "Data/LPA_5s_eval_all/"
+    SAL_PATH = "Stimuli/derived_for_analysis/Saliency/"
+    OBJ_PATH = "Stimuli/derived_for_analysis/Segmentation/"
+    RATING_PATH = "ExpertRatings/"
+    SUMMARY_PATH = "Analysis/"
 
     px2deg = (0.8 * 47.7) / 1920
 
-    s_ids = [f[7:9] for f in os.listdir("LPA_5s_eval_psycsci/") if f.endswith(".csv")]
+    s_ids = [f[7:9] for f in os.listdir(EVAL_PATH) if f.endswith("_eval_rad05_no_nss_hpc.csv.gz")]
     s_ids = sorted(list(np.unique(s_ids)))    
     # if not yet done, combine NSS calculations with other metrics
     for s_id in s_ids:
@@ -143,7 +144,7 @@ def main():
 
     df_obj = pd.DataFrame.from_dict(d_obj, orient="index")
     df_obj.index.name = "scene_obj"
-    df_obj.to_csv(f"df_obj_props_psycsci.csv.gz", compression="gzip")
+    df_obj.to_csv(f"{SUMMARY_PATH}df_obj_props_psycsci.csv.gz", compression="gzip")
 
     ## now, calculate the FOV properties
 
@@ -199,7 +200,7 @@ def main():
         )
         df_all = pd.concat([df_all, df_fovs])
 
-    df_all.to_csv(f"df_all_fovs_psycsci.csv.gz", compression="gzip", index=False)
+    df_all.to_csv(f"{SUMMARY_PATH}df_all_fovs_psycsci.csv.gz", compression="gzip", index=False)
 
     ## lastly, calculate the #fix and dwell time per object per subject
     d_obj_nfov_diff = {}
@@ -234,7 +235,7 @@ def main():
                         orient='index')
     df_obj_nfov.index = pd.MultiIndex.from_tuples(df_obj_nfov.index)
     df_obj_nfov.index.names = ['scene_obj', 'subj_id']
-    df_obj_nfov.to_csv('df_obj_nfov_diff_psycsci.csv.gz', compression='gzip')
+    df_obj_nfov.to_csv(f"{SUMMARY_PATH}df_obj_nfov_diff_psycsci.csv.gz", compression='gzip')
 
     df_obj_dt = pd.DataFrame.from_dict({(i,j): d_obj_dt_diff[i][j]
                                 for i in d_obj_dt_diff.keys() 
@@ -242,7 +243,7 @@ def main():
                             orient='index')
     df_obj_dt.index = pd.MultiIndex.from_tuples(df_obj_dt.index)
     df_obj_dt.index.names = ['scene_obj', 'subj_id']
-    df_obj_dt.to_csv('df_obj_dt_diff_psycsci.csv.gz', compression='gzip')
+    df_obj_dt.to_csv(f"{SUMMARY_PATH}df_obj_dt_diff_psycsci.csv.gz", compression='gzip')
 
 
 if __name__ == "__main__":
