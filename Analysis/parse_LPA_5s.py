@@ -10,11 +10,11 @@ def transform_x(input, video_min=192, video_max=1728, target_min=0, target_max=1
     try:
         num = float(input)
     except ValueError:
-        return np.NaN
+        return np.nan
     num = float(input)
     # check if x val exceeds boundaries of the video
     if (video_max <= num) or (num < video_min):
-        return np.NaN
+        return np.nan
     else:
         return (
             (num - video_min + target_min)
@@ -27,11 +27,11 @@ def transform_y(input, video_min=108, video_max=972, target_min=0, target_max=10
     try:
         num = float(input)
     except ValueError:
-        return np.NaN
+        return np.nan
     num = float(input)
     # check if val exceeds boundaries of the video
     if (video_max <= num) or (num < video_min):
-        return np.NaN
+        return np.nan
     else:
         return (
             (num - video_min + target_min)
@@ -44,7 +44,7 @@ def float_or_nan(input):
     try:
         num = float(input)
     except ValueError:
-        return np.NaN
+        return np.nan
     return num
 
 
